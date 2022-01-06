@@ -171,6 +171,20 @@ private val matrixCase: Map<FunctionMatcher, Map<String, Boolean>> = run {
             "fun foo(a: (String) -> Unit)" to true,
             "fun foo(a: (Int) -> Unit)" to true,
         ),
+        FunctionMatcher.fromFunctionSignature("foo(kotlin.String)") to linkedMapOf(
+            "fun String.foo()" to true,
+            "fun foo(a: String)" to true,
+            "fun Int.foo()" to false,
+            "fun String.foo(a: Int)" to false,
+            "fun foo(a: String, ba: Int)" to false,
+        ),
+        FunctionMatcher.fromFunctionSignature("foo(kotlin.String, kotlin.Int)") to linkedMapOf(
+            "fun String.foo()" to false,
+            "fun foo(a: String)" to false,
+            "fun Int.foo()" to false,
+            "fun String.foo(a: Int)" to true,
+            "fun foo(a: String, ba: Int)" to true,
+        ),
     )
 }
 
